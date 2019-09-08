@@ -295,7 +295,7 @@ nnoremap <A-Right> <C-]>
 " purge learnit caches
 map ,za :!cd /home/peter/Workspace/Web/learnit/;php72 /home/peter/Workspace/Web/learnit/admin/cli/purge_caches.php<cr>
 " uglify AMD
-map ,zs :!cd %:h/..; /home/peter/.config/yarn/global/node_modules/.bin/uglify -s ./src/%:t -o ./build/%:t:r.min.%:e<cr>
+map ,zs :!cd %:h/..; /home/peter/.config/yarn/global/node_modules/.bin/uglifyjs --verbose --warn -o ./build/%:t:r.min.%:e -- ./src/%:t <cr>
 " code checker
 map ,zd :!cd /home/peter/Workspace/Web/learnit/; php72 /home/peter/Workspace/Web/learnit/local/codechecker/run.php %<cr>
 " code lint
