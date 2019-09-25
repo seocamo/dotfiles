@@ -40,7 +40,7 @@ Plug 'vim-airline/vim-airline'
 " bottom bar theme
 Plug 'vim-airline/vim-airline-themes'
 " add delimiter
-Plug 'Raimondi/delimitMate'
+"Plug 'Raimondi/delimitMate'
 " multiple cursors
 Plug 'terryma/vim-multiple-cursors'
 " syntex checker
@@ -153,6 +153,16 @@ set wildignore+=*/node_modules/*                            " ignore node module
 set wildignore+=*/bower_components/*                        " ignore bower components
 set wildignore+=*/dist/*                                    " ignore grunt build directory
 
+" To get out of diff view you can use the :diffoff command.
+function! s:DiffWithSaved()
+  let filetype=&ft
+  diffthis
+  vnew | r # | normal! 1Gdd
+  diffthis
+  exe "setlocal bt=nofile bh=wipe nobl noswf ro ft=" . filetype
+endfunction
+com! DiffSaved call s:DiffWithSaved()
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Theme Config
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -214,7 +224,11 @@ autocmd FileType html inoremap &<space> &amp;<space>
 
 " leader spacebar
 let mapleader = " "
-
+for i in range(97,122)
+  let c = nr2char(i)
+  exec "map \e".c." <M-".c.">"
+  exec "map! \e".c." <M-".c.">"
+endfor
 inoremap <Up> <nop>
 inoremap <Down> <nop>
 inoremap <right> <nop>
@@ -229,6 +243,11 @@ map <C-j> <C-w>j
 map <C-k> <C-w>k
 map <C-h> <C-w>h
 map <C-l> <C-w>l
+
+map <A-j> <C-w>j
+map <A-k> <C-w>k
+map <A-h> <C-w>h
+map <A-l> <C-w>l
 
 " Nav wrap lines
 nnoremap j gj
@@ -292,22 +311,25 @@ nnoremap <A-Left> <C-T>
 nnoremap <A-Right> <C-]>
 
 " start apps
+" lint file with php
+map ,zq :!php72 -l %<cr>
 " purge learnit caches
-map ,za :!cd /home/peter/Workspace/Web/learnit/;php72 /home/peter/Workspace/Web/learnit/admin/cli/purge_caches.php<cr>
+map ,za :!cd /home/peter/Workspace/Web/learnit/;php72 /home/peter/Workspace/Web/learnit/admin/cli/purge_caches.php<cr><cr>
 " uglify AMD
 map ,zs :!cd %:h/..; /home/peter/.config/yarn/global/node_modules/.bin/uglifyjs --verbose --warn -o ./build/%:t:r.min.%:e -- ./src/%:t <cr>
 " code checker
 map ,zd :!cd /home/peter/Workspace/Web/learnit/; php72 /home/peter/Workspace/Web/learnit/local/codechecker/run.php %<cr>
 " code lint
-map ,zf :!cd /home/peter/Workspace/Web/learnit/; php72 -l %<cr>
+map ,zf :!php72 -l %<cr>
 " JS linting
 map ,zc :!/home/peter/.config/yarn/global/node_modules/.bin/eslint %<cr>
 " JS linting with fixing
 map ,zx :!/home/peter/.config/yarn/global/node_modules/.bin/eslint % --fix<cr>
 
+map ,zw :exec "!/usr/bin/firefox 'https://www.php.net/manual-lookup.php?pattern=".expand("<cword>")."&scope=quickref'"<cr><cr>
 
 noremap <leader>t :sh<cr>
-map <leader>o :window difft<cr>
+map <leader>u :window difft<cr>
 
 " Split window
 nmap ss :split<cr><C-w>w
