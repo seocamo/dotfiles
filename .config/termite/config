@@ -32,7 +32,7 @@ scrollback_lines = 10000
 #filter_unmatched_urls = true
 
 # Emit escape sequences for extra modified keys
-modify_other_keys = true
+#modify_other_keys = true
 
 # set size hints for the window
 #size_hints = false

@@ -1,0 +1,29 @@
+#! /bin/sh
+
+sxhkd &
+~/.config/polybar/polybarstart &
+feh --bg-scale ~/.wallpaper.jpg &
+compton -fCG &
+setxkbmap -option caps:escape &
+
+bspc monitor HDMI-0 -d I II III IV V
+bspc monitor DP-4 -d VI VII VIII IX X
+
+# Border colors
+bspc config normal_border_color "#282828"
+bspc config focused_border_color "#1F3939"
+bspc config urgent_border_color "#953900"
+bspc config presel_border_color "#263239"
+
+bspc config border_width         1
+bspc config window_gap           4
+
+bspc config split_ratio          0.52
+bspc config borderless_monocle   true
+bspc config gapless_monocle      true
+
+bspc rule -a Gimp desktop='^8' state=floating follow=on
+bspc rule -a Chromium desktop='^2'
+bspc rule -a mplayer2 state=floating
+bspc rule -a Kupfer.py focus=on
+bspc rule -a Screenkey manage=off

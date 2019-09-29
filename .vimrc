@@ -163,6 +163,11 @@ function! s:DiffWithSaved()
 endfunction
 com! DiffSaved call s:DiffWithSaved()
 
+augroup FastEscape
+    autocmd!
+    au InsertEnter * set timeoutlen=0
+    au InsertLeave * set timeoutlen=1000
+augroup END
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Theme Config
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -224,11 +229,11 @@ autocmd FileType html inoremap &<space> &amp;<space>
 
 " leader spacebar
 let mapleader = " "
-for i in range(97,122)
-  let c = nr2char(i)
-  exec "map \e".c." <M-".c.">"
-  exec "map! \e".c." <M-".c.">"
-endfor
+"for i in range(97,122)
+"  let c = nr2char(i)
+"  exec "map \e".c." <M-".c.">"
+"  exec "map! \e".c." <M-".c.">"
+"endfor
 inoremap <Up> <nop>
 inoremap <Down> <nop>
 inoremap <right> <nop>
@@ -244,10 +249,10 @@ map <C-k> <C-w>k
 map <C-h> <C-w>h
 map <C-l> <C-w>l
 
-map <A-j> <C-w>j
-map <A-k> <C-w>k
-map <A-h> <C-w>h
-map <A-l> <C-w>l
+"map <A-j> <C-w>j
+"map <A-k> <C-w>k
+"map <A-h> <C-w>h
+"map <A-l> <C-w>l
 
 " Nav wrap lines
 nnoremap j gj
