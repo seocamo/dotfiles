@@ -9,6 +9,7 @@ export ZSH="$HOME/.oh-my-zsh"
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 ZSH_THEME="agnoster"
+EDITOR="nvim"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -68,9 +69,8 @@ ZSH_THEME="agnoster"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
-plugins=(zsh-autosuggestions)
-#plugins=(vi-mode)
+plugins=(git zsh-syntax-highlighting zsh-autosuggestions)
+# vi-mode
 
 source $ZSH/oh-my-zsh.sh
 
@@ -100,7 +100,11 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-
+alias la="ls -laF"
+alias ll="ls -lF"
+alias e="$EDITOR"
+alias c="clear"
+alias q="exit"
 
 if [ -d "$HOME/.config/yarn/global/node_modules/.bin" ] ; then
     PATH="$HOME/.config/yarn/global/node_modules/.bin:$PATH"
@@ -111,8 +115,9 @@ fi
 if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
-
-
+if [ -d "$HOME/.config/composer/vendor/bin" ] ; then
+    PATH="$HOME/.config/composer/vendor/bin:$PATH"
+fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 

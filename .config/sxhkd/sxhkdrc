@@ -18,6 +18,8 @@ super + w
 super + Escape
 	pkill -USR1 -x sxhkd
 
+super + alt + Escape
+	pkill -x panel; bspc quit
 #
 # bspwm hotkeys
 #
@@ -123,3 +125,10 @@ super + alt + shift + {h,j,k,l}
 # move a floating window
 super + {Left,Down,Up,Right}
 	bspc node -v {-20 0,0 20,0 -20,20 0}
+
+# Resize Tiled Windows
+super + {Left,Right,Up,Down}
+    xdo move {-x -20,-x +20,-y -20,-y +20}
+
+super + alt + {Left,Right,Up,Down}
+    xdo resize {-w -20,-w +20,-h -20,-h +20}
