@@ -14,11 +14,25 @@ super + @space
 super + w
 	firefox
 
+# slock
+super + v
+	slock
+
+# slock
+super + r
+	termite -t ranger -e ranger
+
 # make sxhkd reload its configuration files:
 super + Escape
 	pkill -USR1 -x sxhkd
 
 super + alt + Escape
+	pkill -x panel; bspc quit
+
+super + Caps
+	pkill -USR1 -x sxhkd
+
+super + alt + Caps
 	pkill -x panel; bspc quit
 #
 # bspwm hotkeys
@@ -49,7 +63,7 @@ super + g
 #
 
 # set the window state
-super + {t,shift + t,s,f}
+super + {s,d,f,t}
 	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
 
 # set the node flags
@@ -132,3 +146,38 @@ super + {Left,Right,Up,Down}
 
 super + alt + {Left,Right,Up,Down}
     xdo resize {-w -20,-w +20,-h -20,-h +20}
+
+##########################
+#System
+##########################
+
+# Raises volume
+XF86AudioRaiseVolume
+    amixer set Master 2%+
+
+# Lowers volume
+XF86AudioLowerVolume
+    amixer set Master 2%-
+
+# Mutes
+XF86AudioMute
+#amixer set Master toggle
+    amixer -D pulse set Master 1+ toggle
+
+
+
+# Brightness goes up
+XF86MonBrightnessUp
+    brightnessScript
+
+# Brightness goes down
+XF86MonBrightnessDown
+    brightnessScript
+
+# Screen lock
+XF86ScreenSaver
+    blur
+
+# Turns off laptop
+XF86Launch1
+    systemctl poweroff

@@ -1,17 +1,28 @@
 #! /bin/sh
 
 sxhkd &
-~/.config/polybar/polybarstart &
 feh --bg-scale ~/.wallpaper.jpg &
 compton -fCG &
 setxkbmap -option caps:escape &
-dunst &
+blueman-applet &
+nm-applet &
+dunst -transparency 20 -corner_radius 10 -padding 10 &
 wmname compiz
+xrandr --output DP-2 --brightness 0.8
+~/.config/polybar/launch_polybar.sh &
 #[ -e "$PANEL_FIFO" ] && bspc subscribe report > "$PANEL_FIFO" &
 #pgrep -x ~/.config/lemonbar/panel > /dev/null || ~/.config/lemonbar/panel &
 
-bspc monitor HDMI-0 -d I II III IV V
-bspc monitor DP-4 -d VI VII VIII IX X
+if [[ $(hostname) == 'peter-pc' ]]; then
+    bspc monitor HDMI-0 -d I II III IV V
+    bspc monitor DP-4 -d VI VII VIII IX X
+elif [[ $(hostname) == 'peter-itu' ]]; then
+    #bspc monitor HDMI-0 -d I II III IV V
+    #bspc monitor DP-2 -d VI VII VIII IX X
+    bspc monitor %DP-0.2 -d I II III IV V
+    bspc monitor %DP-0.3 -d VI VII VIII
+    bspc monitor %DP-2 -d IX X
+fi
 
 # Border colors
 bspc config normal_border_color "#282828"
@@ -26,8 +37,16 @@ bspc config split_ratio          0.52
 bspc config borderless_monocle   true
 bspc config gapless_monocle      true
 
-bspc config top_padding 22
 bspc config bottom_bottom 1
+# HD screen
+bspc config top_padding 25
+# 4k screen
+#bspc config top_padding 50
+
+#mouse
+bspc config pointer_mod         mod4
+bspc config pointer_action1     move
+bspc config pointer_action2     resize_corner
 
 
 bspc rule -a Gimp desktop='^8' state=floating follow=on
@@ -38,4 +57,6 @@ bspc rule -a Screenkey manage=off
 bspc rule -a mpv state=floating rectangle=800x360+480+100
 bspc rule -a mpv node=floating layer=above
 bspc rule -a Pavucontrol state=floating
+bspc rule -a lxappearance state=floating
+bspc rule -a 'Paradox Launcher' state=floating
 

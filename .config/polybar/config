@@ -21,7 +21,7 @@
 shade1 = #0D47A1
 shade2 = #1565C0
 ;background = ${xrdb:color0:#222}
-background = #66222222
+background = #bb111313
 background-alt = #444
 ;foreground = ${xrdb:color7:#222}
 foreground = #dfdfdf
@@ -31,59 +31,58 @@ secondary = #e60053
 alert = #bd2c40
 
 [bar/top]
+monitor = ${env:MONITOR:}
 ;monitor = ${env:MONITOR:HDMI-1}
 width = 100%:-5
 ; HD screen
-height = 18
-; 4K screen
-;height = 36
-;offset-x = 1%
-;offset-y = 1%
-radius = 5.0
-fixed-center = false
+height = 22
 dpi-x = 96
 dpi-y = 96
+radius = 5.0
+; 4K screen
+;height = 44
+;dpi-x = 196
+;dpi-y = 196
+;radius = 10.0
+fixed-center = true
 dim-value = 0.8
 
 background = ${colors.background}
 foreground = ${colors.foreground}
 
 line-size = 1
-line-color = #f00
+line-color = #059
 
-border-size = 0
+border-size = 5
 border-color = #00000000
 
 padding-left = 1
 padding-right = 2
 
 offset-x = 0
-offset-y = 5
+offset-y = 0
 
-module-margin-left = 1
-module-margin-right = 2
+module-margin-left = 0
+module-margin-right = 1
 
-; HD screen
-font-0 = fixed:pixelsize=10;1
-font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
-font-2 = siji:pixelsize=10;1
-; 4k screen
-;font-0 = fixed:pixelsize=20;1
-;font-1 = unifont:fontformat=truetype:size=16:antialias=false;0
-;font-2 = siji:pixelsize=20;1
+;font-0 = fixed:pixelsize=10;1
+;font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
+;font-2 = siji:pixelsize=10;1
+font-0 = SauceCodePro Nerd Font Mono:style=Regular
 
-modules-left = launcher left2 xwindow left1
-modules-center = i3 bspwm mpd
-modules-right = right1 filesystem xbacklight alsa pulseaudio xkeyboard memory cpu wlan eth battery temperature date right2 powermenu
+modules-left = i3 bspwm xwindow mpd
+modules-center = date
+modules-right = cpu memory temperature wlan xbacklight backlight-acpi pulseaudio pacup battery powermenu
 
-tray-maxsize = 16
+tray-maxsize = 64
 tray-position = right
 tray-padding = 2
 ;tray-background = #0063ff
 
-;wm-restack = i3
+;i3
+wm-restack = bspwm
 
-;override-redirect = true
+override-redirect = true
 
 ;scroll-up = i3wm-wsnext
 ;scroll-down = i3wm-wsprev
@@ -91,30 +90,34 @@ tray-padding = 2
 cursor-click = pointer
 cursor-scroll = ns-resize
 
+;not in use
 [module/left2]
 type = custom/text
-content-background = ${color.shade2}
-content-foreground = ${color.shade1}
+;content-background = ${colors.shade2}
+content-foreground = ${colors.shade1}
 content = "%{T3}%{T-}"
 
+;not in use
 [module/left1]
 type = custom/text
-content-background = ${color.bground}
-content-foreground = ${color.shade2}
+;content-background = ${colors.bground}
+content-foreground = ${colors.shade2}
 content = "%{T3}%{T-}"
 
 #+++++++++++++++++++++++++++++++++++++++
 
+;not in use
 [module/right2]
 type = custom/text
-content-background = ${color.shade2}
-content-foreground = ${color.shade1}
+;content-background = ${colors.shade2}
+content-foreground = ${colors.shade1}
 content = "%{T3}%{T-}"
 
+;not in use
 [module/right1]
 type = custom/text
-content-background = ${color.bground}
-content-foreground = ${color.shade2}
+;content-background = ${colors.bground}
+content-foreground = ${colors.shade2}
 content = "%{T3}%{T-}"
 
 ;; _-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_
@@ -123,8 +126,8 @@ content = "%{T3}%{T-}"
 type = custom/text
 content = 
 
-content-background = ${color.shade1}
-content-foreground = ${color.modulefg}
+;content-background = ${colors.shade1}
+;content-foreground = ${colors.foreground}
 content-padding = 1
 
 ;click-left = dmenu_run -b -l 5 -p Search -fn "Misc Termsyn" -nb "#1D1F28" -nf "#f7f7f7" -sb "#1E88E5" -sf "#202020"
@@ -132,8 +135,10 @@ click-left = rofi -show run -fullscreen True -lines 5 -line-margin 5 -padding 30
 
 [module/xwindow]
 type = internal/xwindow
-label = %title:0:30:...%
+label = %title:0:45:...%
+format-underline = #0a6cf5
 
+;not in use
 [module/xkeyboard]
 type = internal/xkeyboard
 blacklist-0 = num lock
@@ -150,6 +155,7 @@ label-indicator-margin = 1
 label-indicator-background = ${colors.secondary}
 label-indicator-underline = ${colors.secondary}
 
+;not in use
 [module/filesystem]
 type = internal/fs
 interval = 25
@@ -205,41 +211,51 @@ ws-icon-1 = web;
 ws-icon-2 = code;
 ws-icon-3 = music;
 ws-icon-4 = irssi;
+ws-icon-5 = term;
+ws-icon-6 = web;
+ws-icon-7 = code;
+ws-icon-8 = music;
+ws-icon-9 = irssi;
 ws-icon-default = 
 
 format = <label-state> <label-mode>
 
 label-dimmed-underline = ${BAR.background}
 
+; Separator in between workspaces
+label-separator = |
+label-separator-padding = 1
+label-separator-foreground = #333333
+
 label-active = %icon%
 label-active-foreground = #fff
 label-active-background = #773f3f3f
 label-active-underline = #c9665e
-label-active-font = 4
-label-active-padding = 4
+label-active-font = 1
+label-active-padding = 1
 
 label-occupied = %icon%
-label-occupied-foreground = #dd
+label-occupied-foreground = #ddd
 label-occupied-underline = #666
-label-occupied-font = 4
-label-occupied-padding = 4
+label-occupied-font = 1
+label-occupied-padding = 1
 
 label-urgent = %icon%
-label-urgent-foreground = #000000
+label-urgent-foreground = #333
 label-urgent-background = #bd2c40
 label-urgent-underline = #9b0a20
-label-urgent-font = 4
-label-urgent-padding = 4
+label-urgent-font = 1
+label-urgent-padding = 1
 
 label-empty = %icon%
-label-empty-foreground = #55
-label-empty-font = 4
-label-empty-padding = 4
+label-empty-foreground = #555
+label-empty-font = 1
+label-empty-padding = 1
 
 label-monocle = 
 label-monocle-underline = ${module/bspwm.label-active-underline}
 label-monocle-background = #33ffffff
-label-monocle-padding = 2
+label-monocle-padding = 1
 
 label-locked = 
 label-locked-foreground = #bd2c40
@@ -308,7 +324,7 @@ type = internal/cpu
 interval = 2
 format-prefix = " "
 format-prefix-foreground = ${colors.foreground-alt}
-format-underline = #f90000
+format-underline = #a93070
 label = %percentage:2%%
 
 [module/memory]
@@ -316,7 +332,7 @@ type = internal/memory
 interval = 2
 format-prefix = " "
 format-prefix-foreground = ${colors.foreground-alt}
-format-underline = #4bffdc
+format-underline = #4bdfdc
 label = %percentage_used%%
 
 [module/wlan]
@@ -325,7 +341,7 @@ interface = wlp0s20f3
 interval = 3.0
 
 format-connected = <ramp-signal> <label-connected>
-format-connected-underline = #9f78e1
+format-connected-underline = #5f78e1
 label-connected = %essid%
 
 format-disconnected =
@@ -341,6 +357,7 @@ ramp-signal-3 = 
 ramp-signal-4 = 
 ramp-signal-foreground = ${colors.foreground-alt}
 
+;not in use
 [module/eth]
 type = internal/network
 interface = enp63s0
@@ -361,15 +378,15 @@ format-disconnected =
 type = internal/date
 interval = 5
 
-date =
-date-alt = " %Y-%m-%d"
+date = "%a, %b %d"
+date-alt = "%d-%m-%Y"
 
 time = %H:%M
 time-alt = %H:%M:%S
 
 format-prefix = 
 format-prefix-foreground = ${colors.foreground-alt}
-format-underline = #0a6cf5
+;format-underline = #0a6cf5
 
 label = %date% %time%
 
@@ -432,6 +449,7 @@ bar-volume-empty-foreground = ${colors.foreground-alt}
 type = internal/battery
 # ls -1 /sys/class/power_supply/
 battery = BAT1
+;battery = BAT0
 adapter = ACAD
 full-at = 97
 
@@ -462,6 +480,13 @@ animation-discharging-2 = 
 animation-discharging-foreground = ${colors.foreground-alt}
 animation-discharging-framerate = 750
 
+[module/pacup]
+type = custom/script
+exec = ~/.config/polybar/pacup.sh
+format-background = #e9b
+format-foreground = #048
+interval = 90
+
 [module/temperature]
 type = internal/temperature
 thermal-zone = 0
@@ -484,30 +509,58 @@ ramp-foreground = ${colors.foreground-alt}
 [module/powermenu]
 type = custom/menu
 
-expand-right = true
+expand-right = false
 
-menu-0-0 = reboot
+menu-0-0 = Lock
 menu-0-0-exec = menu-open-1
-menu-0-1 = shutdown
+menu-0-1 = Reboot
 menu-0-1-exec = menu-open-2
+menu-0-2 = Logout
+menu-0-2-exec = menu-open-3
+menu-0-3 = Hibernate
+menu-0-3-exec = menu-open-4
+menu-0-4 = Suspend
+menu-0-4-exec = menu-open-5
+menu-0-5 = Shutdown
+menu-0-5-exec = menu-open-6
 
-menu-1-0 = back
+menu-1-0 = Back
 menu-1-0-exec = menu-open-0
-menu-1-1 = reboot
-menu-1-1-exec = systemctl reboot
+menu-1-1 = Lock
+menu-1-1-exec = slock
 
-menu-2-0 = shutdown
-menu-2-0-exec = systemctl poweroff
-menu-2-1 = back
-menu-2-1-exec = menu-open-0
+menu-2-0 = Back
+menu-2-0-exec = menu-open-0
+menu-2-1 = Reboot
+menu-2-1-exec = systemctl reboot
+
+menu-3-0 = Logout
+menu-3-0-exec = bspc quit
+menu-3-1 = Back
+menu-3-1-exec = menu-open-0
+
+menu-4-0 = Back
+menu-4-0-exec = menu-open-0
+menu-4-1 = Hibernate
+menu-4-1-exec = systemctl hibernate
+
+menu-5-0 = Back
+menu-5-0-exec = menu-open-0
+menu-5-1 = Suspend
+menu-5-1-exec = systemctl suspend
+
+menu-6-0 = Shutdown
+menu-6-0-exec = systemctl poweroff
+menu-6-1 = Back
+menu-6-1-exec = menu-open-0
 
 format-spacing = 1
-format-background = ${color.shade1}
-format-foreground = ${color.modulefg}
+;format-background = ${colors.shade1}
+;format-foreground = ${colors.foreground}
 format-padding = 1
 
-label-open = 
-label-close = 
+label-open = ⏻
+label-close = X
 label-separator = |
 
 [settings]

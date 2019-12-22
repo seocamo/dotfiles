@@ -49,6 +49,7 @@ Plug 'terryma/vim-multiple-cursors'
 Plug 'mariappan/dragvisuals.vim'
 Plug 'nixon/vim-vmath'
 
+Plug 'djoshea/vim-autoread'
 " }}}
 " resize windows in vim naturally
 "Plug 'simeji/winresizer', { 'on': 'WinResizerStartResize' }
@@ -332,6 +333,8 @@ augroup END
 
 " Tigger autoread when changing buffers or coming back to vim in terminal
 au FocusGained,BufEnter * :silent! !
+" Tigger svae on exit buf or losing focus
+"au FocusLost,WinLeave * :silent! w
 " run zrdb whenever Xdefaults or Xresources are updated.
 autocmd BufWritePost ~/.Xresources,~/.Xdefaults !xrdb %
 " When editing a file, always jump to the last known cursor position.
@@ -344,6 +347,13 @@ autocmd BufReadPost *
 " redraw on delete buffer
 autocmd BufUnload * :redraw
 autocmd BufDelete * :redraw
+
+autocmd CmdwinEnter * nnoremap <CR> <CR>
+autocmd BufReadPost quickfix nnoremap <CR> <CR>
+
+" read file if change outside of vim
+set autoread
+au CursorHold * checktime
 " }}}
 
 " Spaces & wrapping {{{
@@ -478,13 +488,13 @@ inoremap <Left> <nop>
 
 " Tool mapping {{{
 " split line
-nnoremap <leader>S i<cr><esc><right>
+nnoremap <leader>s i<cr><esc><right>
 " Stop highlight after searching
 nnoremap <silent> <leader>, :noh<cr>
 " black hole deletes
 nnoremap <leader>d "_d
 " spell-check set to <leader>s, 'o' for 'orthography'
-map <leader>s :setlocal spell! spelllang=en_us<cr>
+map <leader>so :setlocal spell! spelllang=en_us<cr>
 " replace all is aliased to S
 nnoremap S :%s//g<left><left>
 " replace word under cursor, globally, with confirmation
@@ -507,6 +517,7 @@ nnoremap gv `[v`]
 " Normalize editor {{{
 "inserting blank lines
 nnoremap <cr> o<esc>
+nnoremap <bs> X
 " map Ctrl + s to save in any mode
 noremap <silent> <C-s> :update<cr>
 vnoremap <silent> <C-s> <C-C>:update<cr>
@@ -704,7 +715,7 @@ nnoremap <leader>? :execute "Ack! '" . substitute(substitute(substitute(@/, "\\\
 " it will be skipped, and we'll end up with `:Ack! '\bonkers` and find nothing.
 " It took me a good long time to notice this one.  Computers are total fucking
 " garbage.
-nnoremap <bs> viw:<C-U>call <SID>AckMotion(visualmode())<CR>
+"nnoremap <bs> viw:<C-U>call <SID>AckMotion(visualmode())<CR>
 
 function! s:CopyMotionForType(type)
     if a:type ==# 'v'
@@ -886,8 +897,8 @@ set ai si
 autocmd BufWritePre * %s/\s\+$//e
 set autoindent
 " auto indent php and js files on write
-autocmd BufWritePre *.php :call AutoIndentSave(1000)
-autocmd BufWritePre *.js :call AutoIndentSave(1000)
+"autocmd BufWritePre *.php :call AutoIndentSave(1000)
+"autocmd BufWritePre *.js :call AutoIndentSave(1000)
 
 function! AutoIndentSave(maxlines)
     if line('$') < a:maxlines
