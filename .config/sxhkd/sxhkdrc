@@ -10,13 +10,17 @@ super + Return
 super + @space
 	dmenu_run
 
+# program launcher
+super + x
+	rofi -modi drun -show drun -padding 800 -show-icons -fullscreen -font "System San Francisco Display 18" -theme onedark
+
 # firefox
 super + w
 	firefox
 
 # slock
 super + v
-	slock
+	lock.sh
 
 # slock
 super + r

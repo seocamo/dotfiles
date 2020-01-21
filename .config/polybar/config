@@ -44,6 +44,7 @@ radius = 5.0
 ;dpi-x = 196
 ;dpi-y = 196
 ;radius = 10.0
+
 fixed-center = true
 dim-value = 0.8
 
@@ -206,19 +207,20 @@ label-urgent-padding = 2
 [module/bspwm]
 type = internal/bspwm
 
-ws-icon-0 = term;
-ws-icon-1 = web;
-ws-icon-2 = code;
-ws-icon-3 = music;
-ws-icon-4 = irssi;
-ws-icon-5 = term;
-ws-icon-6 = web;
-ws-icon-7 = code;
-ws-icon-8 = music;
-ws-icon-9 = irssi;
+ws-icon-0 = I;
+ws-icon-1 = II;
+ws-icon-2 = III;
+ws-icon-3 = IV;
+ws-icon-4 = V;
+ws-icon-5 = VI;
+ws-icon-6 = VII;
+ws-icon-7 = VIII;
+ws-icon-8 = IX;
+ws-icon-9 = X;
 ws-icon-default = 
 
 format = <label-state> <label-mode>
+enable-click = true
 
 label-dimmed-underline = ${BAR.background}
 
@@ -299,7 +301,7 @@ label-song-ellipsis = true
 [module/xbacklight]
 type = internal/xbacklight
 # xrandr --listmonitors
-output = DP-4
+output = ${env:MONITOR:}
 format = <label> <bar>
 label = BL
 
@@ -340,7 +342,7 @@ type = internal/network
 interface = wlp0s20f3
 interval = 3.0
 
-format-connected = <ramp-signal> <label-connected>
+format-connected = 直<ramp-signal> <label-connected>
 format-connected-underline = #5f78e1
 label-connected = %essid%
 
@@ -349,12 +351,14 @@ format-disconnected =
 ;format-disconnected-underline = ${self.format-connected-underline}
 ;label-disconnected = %ifname% disconnected
 ;label-disconnected-foreground = ${colors.foreground-alt}
+label-disconnected = 睊no wifi
+label-disconnected-foreground = ${colors.gray}
 
-ramp-signal-0 = 
-ramp-signal-1 = 
-ramp-signal-2 = 
-ramp-signal-3 = 
-ramp-signal-4 = 
+ramp-signal-0 = 1
+ramp-signal-1 = 2
+ramp-signal-2 = 3
+ramp-signal-3 = 4
+ramp-signal-4 = 5
 ramp-signal-foreground = ${colors.foreground-alt}
 
 ;not in use
@@ -373,6 +377,8 @@ format-disconnected =
 ;format-disconnected-underline = ${self.format-connected-underline}
 ;label-disconnected = %ifname% disconnected
 ;label-disconnected-foreground = ${colors.foreground-alt}
+label-disconnected =  %ifname%
+label-disconnected-foreground = ${colors.gray}
 
 [module/date]
 type = internal/date
@@ -482,10 +488,12 @@ animation-discharging-framerate = 750
 
 [module/pacup]
 type = custom/script
-exec = ~/.config/polybar/pacup.sh
+exec = countpacupdate.sh
 format-background = #e9b
 format-foreground = #048
 interval = 90
+click-left = pamac-manager
+click-right = termite -t updating -e ~/.local/bin/launch_update.sh
 
 [module/temperature]
 type = internal/temperature
@@ -523,11 +531,13 @@ menu-0-4 = Suspend
 menu-0-4-exec = menu-open-5
 menu-0-5 = Shutdown
 menu-0-5-exec = menu-open-6
+menu-0-6 = Screen
+menu-0-6-exec = menu-open-7
 
 menu-1-0 = Back
 menu-1-0-exec = menu-open-0
 menu-1-1 = Lock
-menu-1-1-exec = slock
+menu-1-1-exec = ~/.local/bin/lock.sh
 
 menu-2-0 = Back
 menu-2-0-exec = menu-open-0
@@ -553,6 +563,15 @@ menu-6-0 = Shutdown
 menu-6-0-exec = systemctl poweroff
 menu-6-1 = Back
 menu-6-1-exec = menu-open-0
+
+menu-7-0 = Back
+menu-7-0-exec = menu-open-0
+menu-7-1 = Change
+menu-7-1-exec = autorandr --change
+menu-7-2 = Mobile
+menu-7-2-exec = autorandr mobile
+menu-7-3 = Docked
+menu-7-3-exec = autorandr docked
 
 format-spacing = 1
 ;format-background = ${colors.shade1}

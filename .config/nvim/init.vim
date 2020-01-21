@@ -21,6 +21,8 @@
 " Github:       https://github.com/seocamo/dotfiles
 " Maintainer:   Seocamo
 " behavior modification customizations
+"set cuc cul
+abbr _SH #!/bin/sh
 
 " Loadding Plugins {{{
 " ensures that Syntax plugin is loaded
@@ -50,6 +52,7 @@ Plug 'mariappan/dragvisuals.vim'
 Plug 'nixon/vim-vmath'
 
 Plug 'djoshea/vim-autoread'
+Plug 'joereynolds/SQHell.vim'
 " }}}
 " resize windows in vim naturally
 "Plug 'simeji/winresizer', { 'on': 'WinResizerStartResize' }
@@ -118,7 +121,8 @@ Plug 'vim-airline/vim-airline-themes'
 
 " Styling {{{
 " syntex checker
-Plug 'vim-syntastic/syntastic'
+"Plug 'vim-syntastic/syntastic'
+Plug 'dense-analysis/ale'
 " Format+Lint: {{{
 " staticly check code and highlight errors (async syntastic replacement)
 "Plug 'w0rp/ale'
@@ -179,6 +183,7 @@ Plug 'ryanoasis/vim-devicons'
 "Plug 'mattn/emmet-vim'
 " sidebar for tags
 "Plug 'majutsushi/tagbar'
+
 " }}}
 call plug#end()
 
@@ -575,18 +580,22 @@ nnoremap <M-k> <c-u>
 nnoremap <M-l> $
 
 " map <TAB>: to goto start of text of line
+nnoremap gb ^
 nnoremap § ^
 nnoremap d§ d^
 nnoremap c§ c^
 nnoremap y§ y^
 
 " map ½ to go to the end of line
+nnoremap gn $
 nnoremap ½ $
 nnoremap d½ d$
 nnoremap c½ c$
 nnoremap y½ y$
 " copy to end of line
 nnoremap Y y$
+
+nnoremap U "0p
 
 " jump block
 nmap Æ {
@@ -759,10 +768,13 @@ nnoremap <leader>p :Files<cr>
 nnoremap <leader>x :GFiles?<cr>
 ":Rgi<space>
 let g:oldsearch = ''
+" type text to search
 nnoremap <leader>zc :call FzfSearchNone('Rgi')<cr>
 "nnoremap <leader>A :call FzfSearchNone('Rg')<cr>
+" search current word
 nnoremap <leader>zx :call FzfSearchThis('Rgi', expand("<cword>"))<cr>
 "nnoremap <leader>Q :call FzfSearchThis('Rg', expand("<cword>"))<cr>
+" search again
 nnoremap <leader>zz :call FzfSearchThat('Rgi')<cr>
 "nnoremap <leader>Z :call FzfSearchThat('Rg')<cr>
 
@@ -863,6 +875,17 @@ nnoremap <leader>gs :Gstatus<cr>
 nnoremap <leader>gc :Gcommit<cr>
 " }}}
 
+" SQL - dd/e/s/S/ZZ {{{
+let g:sqh_connections = {
+\  'default': {
+\    'user': 'root',
+\    'password': '1234',
+\    'host': 'localhost',
+\    'database': 'learnit'
+\  }
+\}
+" }}}
+
 " Bars & windows {{{
 " status bar
 set showcmd
@@ -906,38 +929,54 @@ function! AutoIndentSave(maxlines)
     endif
 endfunction
 
+" Ale
+nnoremap <silent> <leader>. :ALEToggle<cr>
+nmap <silent> <leader>æ :ALEPreviousWrap<cr>
+nmap <silent> <leader>ø :ALENextWrap<cr>
+nnoremap <silent> <leader>å :ALEGoToDefinition<cr>
+let b:ale_fixers = {
+\   'javascript': ['prettier', 'eslint'],
+\   'php': ['php_cs_fixer', 'phpcbf', 'prettier'],
+\   '*': ['remove_trailing_lines', 'trim_whitespace']
+\}
+let g:ale_fix_on_save = 1
+let g:ale_completion_tsserver_autoimport = 1
+let g:airline#extensions#ale#enabled = 1
+let g:ale_php_phan_use_client = 1
+let g:ale_php_phpcs_standard = '~/Workspace/Utils/itucs'
+
 " SyntasticToggleMode
-nnoremap <silent> <leader>. :call SynErrToggle()<cr>
-let g:synerr_toggle = 0
-function! SynErrToggle()
-    if g:synerr_toggle
-        SyntasticToggleMode
-        let g:synerr_toggle = 0
-    else
-        SyntasticToggleMode
-        SyntasticCheck
-        let g:synerr_toggle = 1
-    endif
-endfunction
-" find next , without a space after
-map <leader>f :/\v,(\S)\@=<cr>
+"nnoremap <silent> <leader>. :call SynErrToggle()<cr>
+"let g:synerr_toggle = 0
+"function! SynErrToggle()
+    "if g:synerr_toggle
+        "SyntasticToggleMode
+        "let g:synerr_toggle = 0
+    "else
+        "SyntasticToggleMode
+        "SyntasticCheck
+        "let g:synerr_toggle = 1
+    "endif
+"endfunction
+"" find next , without a space after
+"map <leader>f :/\v,(\S)\@=<cr>
 
-" auto indent
-nnoremap <leader>i :call AutoIndentSave(10000)<cr>
-" syntastic
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+"" auto indent
+"nnoremap <leader>i :call AutoIndentSave(10000)<cr>
+"" syntastic
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0
-let g:syntastic_mode_map = {
-            \    "mode": "passive",
-            \    "active_filetypes": [],
-            \    "passive_filetypes": []
-            \}
+"let g:syntastic_always_populate_loc_list = 1
+"let g:syntastic_auto_loc_list = 1
+"let g:syntastic_check_on_open = 0
+"let g:syntastic_check_on_wq = 0
+"let g:syntastic_mode_map = {
+            "\    "mode": "passive",
+            "\    "active_filetypes": [],
+            "\    "passive_filetypes": []
+            "\}
 " }}}
 
 " Theme and colors {{{
@@ -1041,9 +1080,9 @@ nnoremap <F12> :call SynStack()<CR>
 let g:html_indent_tags = 'li|p'
 
 " Navigating with guides
-"inoremap <leader>æ <Esc>/<++><Enter>"_c4l
-vnoremap <leader>æ <Esc>/<++><Enter>"_c4l
-map <leader>æ <Esc>/<++><Enter>"_c4l
+"inoremap <leader>l <Esc>/<++><Enter>"_c4l
+vnoremap <leader>l <Esc>/<++><Enter>"_c4l
+map <leader>l <Esc>/<++><Enter>"_c4l
 
 """HTML
 autocmd FileType html inoremap ,b <b></b><Space><++><Esc>FbT>i

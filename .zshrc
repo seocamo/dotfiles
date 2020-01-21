@@ -105,6 +105,15 @@ alias ll="ls -lF"
 alias e="$EDITOR"
 alias c="clear"
 alias q="exit"
+alias p="sudo pacman"
+alias SS="sudo systemctl"
+alias ka="killall"
+alias g="git"
+alias f="ranger"
+alias lsp="pacman -Qett --color=always | less"
+
+
+alias -g G="| grep -i"
 
 
 if [ -d "$HOME/.config/yarn/global/node_modules/.bin" ] ; then
