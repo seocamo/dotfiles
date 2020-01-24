@@ -33,12 +33,12 @@ alert = #bd2c40
 [bar/top]
 monitor = ${env:MONITOR:}
 ;monitor = ${env:MONITOR:HDMI-1}
-width = 100%:-5
+width = 100%
 ; HD screen
 height = 22
 dpi-x = 96
 dpi-y = 96
-radius = 5.0
+radius = 0.0
 ; 4K screen
 ;height = 44
 ;dpi-x = 196
@@ -54,7 +54,7 @@ foreground = ${colors.foreground}
 line-size = 1
 line-color = #059
 
-border-size = 5
+border-size = 0
 border-color = #00000000
 
 padding-left = 1
@@ -70,6 +70,7 @@ module-margin-right = 1
 ;font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
 ;font-2 = siji:pixelsize=10;1
 font-0 = SauceCodePro Nerd Font Mono:style=Regular
+font-1 = SauceCodePro Nerd Font Mono:size=10:style=Bold
 
 modules-left = i3 bspwm xwindow mpd
 modules-center = date
@@ -395,6 +396,7 @@ format-prefix-foreground = ${colors.foreground-alt}
 ;format-underline = #0a6cf5
 
 label = %date% %time%
+label-font = 2
 
 [module/pulseaudio]
 type = internal/pulseaudio

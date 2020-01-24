@@ -58,9 +58,9 @@ bspc config gapless_monocle      true
 
 bspc config bottom_bottom 1
 # HD screen
-bspc config top_padding 25
+bspc config top_padding 22
 # 4k screen
-#bspc config top_padding 50
+#bspc config top_padding 44
 
 #mouse
 bspc config pointer_mod         mod4
