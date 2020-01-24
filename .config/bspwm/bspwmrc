@@ -24,7 +24,7 @@ xset r rate 300 50 &
 
 wmname compiz
 xrandr --output DP-2 --brightness 0.8
-xrandr --dpi 192
+#xrandr --dpi 192
 xsetroot -cursor_name left_ptr &
 launch_polybar.sh &
 #[ -e "$PANEL_FIFO" ] && bspc subscribe report > "$PANEL_FIFO" &
@@ -58,9 +58,9 @@ bspc config gapless_monocle      true
 
 bspc config bottom_bottom 1
 # HD screen
-bspc config top_padding 22
+bspc config top_padding 24
 # 4k screen
-#bspc config top_padding 44
+#bspc config top_padding 48
 
 #mouse
 bspc config pointer_mod         mod4
