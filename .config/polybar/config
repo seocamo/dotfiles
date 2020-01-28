@@ -456,8 +456,7 @@ bar-volume-empty-foreground = ${colors.foreground-alt}
 [module/battery]
 type = internal/battery
 # ls -1 /sys/class/power_supply/
-battery = BAT1
-;battery = BAT0
+battery = ${env:BAT_NAME:BAT1}
 adapter = ACAD
 full-at = 97
 

@@ -30,7 +30,8 @@ launch_polybar.sh &
 #[ -e "$PANEL_FIFO" ] && bspc subscribe report > "$PANEL_FIFO" &
 #pgrep -x ~/.config/lemonbar/panel > /dev/null || ~/.config/lemonbar/panel &
 # locks screen after 30 mins
-xautolock -time 15 .locker "lock.sh" -notify 30 -notifier "notify-send -t 10000 -- 'Locking screen in 30 drconds'" &
+xautolock -time 10 -locker "lock.sh" &
+export BAT_NAME=$(ls -1 /sys/class/power_supply/ | grep BAT)
 
 if [[ $(hostname) == 'peter-pc' ]]; then
     bspc monitor HDMI-0 -d I II III IV V
