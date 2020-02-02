@@ -580,14 +580,12 @@ nnoremap <M-k> <c-u>
 nnoremap <M-l> $
 
 " map <TAB>: to goto start of text of line
-nnoremap gb ^
 nnoremap § ^
 nnoremap d§ d^
 nnoremap c§ c^
 nnoremap y§ y^
 
 " map ½ to go to the end of line
-nnoremap gn $
 nnoremap ½ $
 nnoremap d½ d$
 nnoremap c½ c$
