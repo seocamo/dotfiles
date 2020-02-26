@@ -41,6 +41,9 @@ super + alt + Caps
 #
 # bspwm hotkeys
 #
+# xkill
+ctrl + alt + Escape
+	xkill
 
 # quit/restart bspwm
 super + alt + {q,r}
